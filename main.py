@@ -12,4 +12,9 @@ while True:
     if title.lower() == "q":
         break
 
+artist = input("artist: ")
+album = input("album: ")
+
+songs.append(Song(title, artist, album))
+print("song added.\n")
   
