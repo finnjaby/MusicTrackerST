@@ -1,3 +1,4 @@
+import sys
 from Song import Song
 
 song1 = Song("Bohemian Rhapsody", "Queen", "A Night at the Opera")
@@ -11,7 +12,8 @@ songs = []
 while True:
     title = input("title (or 'q' to quit): ")
     if title.lower() == "q":
-        break
+        sys.exit(f"quitting")
+    else: break
 
 artist = input("artist: ")
 album = input("album: ")
