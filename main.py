@@ -51,3 +51,21 @@ def view_songs(song_list):
 
 # Calls the function
 view_songs(songs)
+
+# Edit songs
+
+while (1):
+    yn = input("Do you want to edit your playlist? \n (Y/N)")
+    if yn.lower() == "y":
+        edit = input("Enter the title of the song you want to Edit:")
+        if edit.lower() == title.lower():
+            title = input("Edit Title to:")
+            """ save = input("Save changes? Y/N")
+            if save.lower() == "y":
+                print("New title is: " + title) """
+        else: print("Title not Found.")
+    elif yn.lower == "n":
+        print("You have exited editing.")
+        break
+    else: print("Invalid Input.")
+
