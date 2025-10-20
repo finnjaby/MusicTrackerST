@@ -22,3 +22,19 @@ print("song added.\n")
 print("\nall songs added:")
 for s in songs:
     print(f"{s.title} - {s.artist} ({s.album})")
+
+print
+
+# loop to remove songs
+
+while True:
+    remove = input("title to remove (or 'stop' to stop removing): ")
+    if remove.lower() == "stop":
+        break
+    for i, s in enumerate(songs):
+        if s.title.lower() == remove.lower():
+            songs.pop(i)
+            print("song removed.\n")
+            break
+    else:
+        print("no song found with that title.\n")
