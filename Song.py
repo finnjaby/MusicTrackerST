@@ -11,3 +11,4 @@ class Song:
     def display_info(self):
         """Return a formatted string for displaying song details"""
         return f"{self.title:<25} | {self.artist:<20} | {self.album}"
+    
