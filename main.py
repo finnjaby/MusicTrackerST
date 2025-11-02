@@ -1,4 +1,5 @@
 import sys
+import random
 from Song import Song
 
 song1 = Song("Bohemian Rhapsody", "Queen", "A Night at the Opera")
@@ -49,8 +50,21 @@ def view_songs(song_list):
     for song in song_list:
         print(song.display_info())
 
+# Random song picker
+def pick_random_song(song_list):
+    if not song_list:
+        print("no songs available to pick.\n")
+        return
+    choice = random.choice(song_list)
+    print(f"random pick: {choice.title} - {choice.artist} ({choice.album})\n")
+
 # Calls the function
 view_songs(songs)
+
+# Offer random song suggestion
+pick = input("Pick a random song (Y/N): ")
+if pick.lower() == "y":
+    pick_random_song(songs)
 
 # Edit songs
 
