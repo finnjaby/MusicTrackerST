@@ -30,7 +30,6 @@ for s in songs:
 print
 
 # loop to remove songs
-
 while True:
     remove = input("title to remove (or 'stop' to stop removing): ")
     if remove.lower() == "stop":
@@ -42,13 +41,6 @@ while True:
             break
     else:
         print("no song found with that title.\n")
-# This function views all the songs
-def view_songs(song_list):
-    print("\n=== My Music Collection ===")
-    print(f"{'Title':<25} | {'Artist':<20} | {'Album'}")
-    print("-" * 60)
-    for song in song_list:
-        print(song.display_info())
 
 # Random song picker
 def pick_random_song(song_list):
@@ -58,8 +50,6 @@ def pick_random_song(song_list):
     choice = random.choice(song_list)
     print(f"random pick: {choice.title} - {choice.artist} ({choice.album})\n")
 
-# Calls the function
-view_songs(songs)
 
 # Offer random song suggestion
 pick = input("Pick a random song (Y/N): ")
@@ -67,19 +57,37 @@ if pick.lower() == "y":
     pick_random_song(songs)
 
 # Edit songs
+while True:
+    yn = input("Do you want to edit your playlist? (Y/N): ").strip().lower()
 
-while (1):
-    yn = input("Do you want to edit your playlist? \n (Y/N)")
-    if yn.lower() == "y":
-        edit = input("Enter the title of the song you want to Edit:")
-        if edit.lower() == title.lower():
-            title = input("Edit Title to:")
-            """ save = input("Save changes? Y/N")
-            if save.lower() == "y":
-                print("New title is: " + title) """
-        else: print("Title not Found.")
-    elif yn.lower == "n":
-        print("You have exited editing.")
+    if yn == "n":
         break
-    else: print("Invalid Input.")
 
+    if yn == "y":
+        print("\nYour current playlist:")
+        for i, song in enumerate(songs, 1):
+            print(f"{i}. {song}")
+
+        edit = input("\nEnter the title of the song you want to edit: ").strip()
+
+        for i in range(len(songs)):
+            if edit.lower() in songs[i].title.lower():
+                new_title = input("Edit title to: ").strip()
+                songs[i] = new_title
+                print("Song title updated!")
+            else:
+                print("Title not found.")
+
+    else:
+        print("Invalid input, please enter Y or N.")
+
+# This function views all the songs
+def view_songs(song_list):
+    print("\n=== My Music Collection ===")
+    print(f"{'Title':<25} | {'Artist':<20} | {'Album'}")
+    print("-" * 60)
+    for song in song_list:
+        print(song.display_info())
+
+# Calls the function
+view_songs(songs)
