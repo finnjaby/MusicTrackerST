@@ -69,17 +69,21 @@ if pick.lower() == "y":
 # Edit songs
 
 while (1):
-    yn = input("Do you want to edit your playlist? \n (Y/N)")
+    yn = input("Do you want to edit your playlist? \n(Y/N)")
     if yn.lower() == "y":
-        edit = input("Enter the title of the song you want to Edit:")
+        edit = input("Enter the title of the song you want to Edit: ")
         if edit.lower() == title.lower():
             title = input("Edit Title to:")
-            """ save = input("Save changes? Y/N")
+            save = input("Save changes? \n(Y/N) ")
             if save.lower() == "y":
-                print("New title is: " + title) """
-        else: print("Title not Found.")
-    elif yn.lower == "n":
+                print("New title is: " + title) 
+                break
+        else: 
+            print("Title not Found.")
+            break
+    elif yn.lower() == "n":
         print("You have exited editing.")
         break
     else: print("Invalid Input.")
+    
 
