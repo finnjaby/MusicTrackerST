@@ -1,5 +1,5 @@
 import random
-from Song import Song
+from python.Song import Song
 
 
 def print_menu():
