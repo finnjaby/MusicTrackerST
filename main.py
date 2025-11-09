@@ -1,48 +1,17 @@
-import sys
 import random
 from Song import Song
 
-song1 = Song("Bohemian Rhapsody", "Queen", "A Night at the Opera")
-print(song1)
+
+def print_menu():
+    print("\n=== Music Tracker Menu ===")
+    print("1) Add song")
+    print("2) Remove song")
+    print("3) View songs")
+    print("4) Pick random song")
+    print("5) Edit a song")
+    print("q) Quit")
 
 
-# list to store songs in memory
-songs = []
-
-# loop to add songs
-while True:
-    title = input("title (or 'q' to quit): ")
-    if title.lower() == "q":
-        sys.exit(f"quitting")
-    else: break
-
-artist = input("artist: ")
-album = input("album: ")
-
-songs.append(Song(title, artist, album))
-print("song added.\n")
-  
-  # print all songs before exiting
-print("\nall songs added:")
-for s in songs:
-    print(f"{s.title} - {s.artist} ({s.album})")
-
-print
-
-# loop to remove songs
-while True:
-    remove = input("title to remove (or 'stop' to stop removing): ")
-    if remove.lower() == "stop":
-        break
-    for i, s in enumerate(songs):
-        if s.title.lower() == remove.lower():
-            songs.pop(i)
-            print("song removed.\n")
-            break
-    else:
-        print("no song found with that title.\n")
-
-# Random song picker
 def pick_random_song(song_list):
     if not song_list:
         print("no songs available to pick.\n")
@@ -51,43 +20,89 @@ def pick_random_song(song_list):
     print(f"random pick: {choice.title} - {choice.artist} ({choice.album})\n")
 
 
-# Offer random song suggestion
-pick = input("Pick a random song (Y/N): ")
-if pick.lower() == "y":
-    pick_random_song(songs)
-
-# Edit songs
-while True:
-    yn = input("Do you want to edit your playlist? (Y/N): ").strip().lower()
-
-    if yn == "n":
-        break
-
-    if yn == "y":
-        print("\nYour current playlist:")
-        for i, song in enumerate(songs, 1):
-            print(f"{i}. {song}")
-
-        edit = input("\nEnter the title of the song you want to edit: ").strip()
-
-        for i in range(len(songs)):
-            if edit.lower() in songs[i].title.lower():
-                new_title = input("Edit title to: ").strip()
-                songs[i] = new_title
-                print("Song title updated!")
-            else:
-                print("Title not found.")
-
-    else:
-        print("Invalid input, please enter Y or N.")
-
-# This function views all the songs
 def view_songs(song_list):
+    if not song_list:
+        print("\nNo songs in your list yet.")
+        return
     print("\n=== My Music Collection ===")
     print(f"{'Title':<25} | {'Artist':<20} | {'Album'}")
     print("-" * 60)
     for song in song_list:
         print(song.display_info())
 
-# Calls the function
-view_songs(songs)
+
+def add_song(songs):
+    title = input("title (blank to cancel): ").strip()
+    if not title:
+        print("canceled.")
+        return
+    artist = input("artist: ").strip()
+    album = input("album: ").strip()
+    songs.append(Song(title, artist, album))
+    print("song added.\n")
+
+
+def remove_song(songs):
+    if not songs:
+        print("no songs to remove.")
+        return
+    remove = input("title to remove: ").strip()
+    for i, s in enumerate(songs):
+        if s.title.lower() == remove.lower():
+            songs.pop(i)
+            print("song removed.\n")
+            return
+    print("no song found with that title.\n")
+
+
+def edit_song(songs):
+    if not songs:
+        print("no songs to edit.")
+        return
+    print("\nYour current playlist:")
+    for i, song in enumerate(songs, 1):
+        print(f"{i}. {song}")
+    target = input("\nEnter the exact title to edit: ").strip()
+    for s in songs:
+        if s.title.lower() == target.lower():
+            new_title = input(f"New title (enter to keep '{s.title}'): ").strip()
+            new_artist = input(f"New artist (enter to keep '{s.artist}'): ").strip()
+            new_album = input(f"New album (enter to keep '{s.album}'): ").strip()
+            if new_title:
+                s.title = new_title
+            if new_artist:
+                s.artist = new_artist
+            if new_album:
+                s.album = new_album
+            print("Song updated!\n")
+            return
+    print("Title not found.\n")
+
+
+def main():
+    songs = []
+    print("Welcome to Music Tracker!")
+
+    while True:
+        print_menu()
+        choice = input("Select an option: ").strip().lower()
+
+        if choice == "1":
+            add_song(songs)
+        elif choice == "2":
+            remove_song(songs)
+        elif choice == "3":
+            view_songs(songs)
+        elif choice == "4":
+            pick_random_song(songs)
+        elif choice == "5":
+            edit_song(songs)
+        elif choice == "q":
+            print("quitting")
+            break
+        else:
+            print("invalid selection. please choose from the menu.")
+
+
+if __name__ == "__main__":
+    main()
