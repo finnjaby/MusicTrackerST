@@ -1,5 +1,5 @@
 import random
-from python.Song import Song
+from Song import Song
 
 
 def print_menu():
@@ -24,9 +24,15 @@ def view_songs(song_list):
     if not song_list:
         print("\nNo songs in your list yet.")
         return
+    
+    # Ask if user wants to sort by genre
+    sort_choice = input("Sort by genre? (y/n): ").strip().lower()
+    if sort_choice == 'y':
+        song_list = sorted(song_list, key=lambda s: s.genre.lower())
+    
     print("\n=== My Music Collection ===")
-    print(f"{'Title':<25} | {'Artist':<20} | {'Album'}")
-    print("-" * 60)
+    print(f"{'Title':<25} | {'Artist':<20} | {'Album':<20} | {'Genre'}")
+    print("-" * 80)
     for song in song_list:
         print(song.display_info())
 
@@ -38,7 +44,8 @@ def add_song(songs):
         return
     artist = input("artist: ").strip()
     album = input("album: ").strip()
-    songs.append(Song(title, artist, album))
+    genre = input("genre: ").strip()
+    songs.append(Song(title, artist, album, genre))
     print("song added.\n")
 
 
@@ -68,12 +75,15 @@ def edit_song(songs):
             new_title = input(f"New title (enter to keep '{s.title}'): ").strip()
             new_artist = input(f"New artist (enter to keep '{s.artist}'): ").strip()
             new_album = input(f"New album (enter to keep '{s.album}'): ").strip()
+            new_genre = input(f"New genre (enter to keep '{s.genre}'): ").strip()
             if new_title:
                 s.title = new_title
             if new_artist:
                 s.artist = new_artist
             if new_album:
                 s.album = new_album
+            if new_genre:
+                s.genre = new_genre
             print("Song updated!\n")
             return
     print("Title not found.\n")
