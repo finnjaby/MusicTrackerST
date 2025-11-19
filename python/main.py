@@ -1,5 +1,6 @@
 import random
 from Song import Song
+import csv
 
 
 def print_menu():
@@ -9,6 +10,7 @@ def print_menu():
     print("3) View songs")
     print("4) Pick random song")
     print("5) Edit a song")
+    print("6) Import/Export CSV") 
     print("q) Quit")
 
 
@@ -88,6 +90,60 @@ def edit_song(songs):
             return
     print("Title not found.\n")
 
+def import_csv(songs):
+    filename = input("Enter CSV filename to import: ").strip()
+    try:
+        with open(filename, "r", newline="", encoding="utf-8") as f:
+            reader = csv.DictReader(f)
+            count = 0
+            for row in reader:
+                title = row.get("title", "").strip()
+                artist = row.get("artist", "").strip()
+                album = row.get("album", "").strip()
+                genre = row.get("genre", "").strip()
+                if title:
+                    songs.append(Song(title, artist, album, genre))
+                    count += 1
+        print(f"Imported {count} songs from '{filename}'.\n")
+    except FileNotFoundError:
+        print("File not found.\n")
+
+
+def export_csv(songs):
+    if not songs:
+        print("No songs to export.\n")
+        return
+
+    filename = input("Enter filename to export (e.g., songs.csv): ").strip()
+    if not filename:
+        print("Export canceled.\n")
+        return
+
+    with open(filename, "w", newline="", encoding="utf-8") as f:
+        writer = csv.writer(f)
+        writer.writerow(["title", "artist", "album", "genre"])
+        for s in songs:
+            writer.writerow([s.title, s.artist, s.album, s.genre])
+
+    print(f"Exported {len(songs)} songs to '{filename}'.\n")
+
+
+def csv_menu(songs):
+    while True:
+        print("\nCSV Import/Export")
+        print("1) Import CSV")
+        print("2) Export CSV")
+        print("b) Back to main menu")
+        choice = input("Choose an option: ").strip().lower()
+
+        if choice == "1":
+            import_csv(songs)
+        elif choice == "2":
+            export_csv(songs)
+        elif choice == "b":
+            return
+        else:
+            print("Invalid choice.\n")
 
 def main():
     songs = []
@@ -107,6 +163,8 @@ def main():
             pick_random_song(songs)
         elif choice == "5":
             edit_song(songs)
+        elif choice == "6":
+            csv_menu(songs)
         elif choice == "q":
             print("quitting")
             break
