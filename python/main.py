@@ -26,11 +26,11 @@ def view_songs(song_list):
     if not song_list:
         print("\nNo songs in your list yet.")
         return
-    
+
     # Ask if user wants to sort by genre
-    sort_choice = input("Sort by genre? (y/n): ").strip().lower()
+    sort_choice = input("Sort by genre and alphabetically? (y/n): ").strip().lower()
     if sort_choice == 'y':
-        song_list = sorted(song_list, key=lambda s: s.genre.lower())
+        song_list = sorted(song_list, key=lambda s: (s.genre.lower(), s.title.lower()))
     
     print("\n=== My Music Collection ===")
     print(f"{'Title':<25} | {'Artist':<20} | {'Album':<20} | {'Genre'}")
