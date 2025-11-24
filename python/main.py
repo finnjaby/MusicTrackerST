@@ -1,5 +1,6 @@
 import random
 from Song import Song
+from operator import attrgetter
 import csv
 
 
@@ -27,10 +28,8 @@ def view_songs(song_list):
         print("\nNo songs in your list yet.")
         return
 
-    # Ask if user wants to sort by genre
-    sort_choice = input("Sort by genre and alphabetically? (y/n): ").strip().lower()
-    if sort_choice == 'y':
-        song_list = sorted(song_list, key=lambda s: (s.genre.lower(), s.title.lower()))
+    # Sort Alphabetically and by Genre
+    song_list = sorted(song_list, key = attrgetter('genre', 'title'))
     
     print("\n=== My Music Collection ===")
     print(f"{'Title':<25} | {'Artist':<20} | {'Album':<20} | {'Genre'}")
