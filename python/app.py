@@ -29,13 +29,33 @@ def home():
     songs = load_songs_from_csv()
     return render_template('web.html', songs=songs)
 
-# ⭐ NEW: Remove a song by title
+# ⭐ NEW: Add a song (web form)
+@app.route('/add', methods=["GET", "POST"])
+def add_song():
+    if request.method == "POST":
+        title = request.form["title"]
+        artist = request.form["artist"]
+        album = request.form["album"]
+        genre = request.form["genre"]
+
+        songs = load_songs_from_csv()
+        songs.append({
+            "title": title,
+            "artist": artist,
+            "album": album,
+            "genre": genre
+        })
+        save_songs_to_csv(songs)
+        return redirect('/')
+    
+    return render_template('add_song.html')
+
 @app.route('/remove/<title>', methods=['POST'])
 def remove_song(title):
     songs = load_songs_from_csv()
     updated = [s for s in songs if s["title"].lower() != title.lower()]
     save_songs_to_csv(updated)
     return redirect('/')
-    
+
 if __name__ == '__main__':
     app.run(debug=True)
