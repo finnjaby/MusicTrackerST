@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add Song</title>
+    <style>
+        body { font-family: Arial; background: #709abe; color: #47339e; padding: 20px; }
+        .container { background: white; padding: 20px; border-radius: 8px; max-width: 600px; }
+        input { width: 100%; padding: 8px; margin-bottom: 10px; }
+        button { padding: 10px; width: 100%; background: #47339e; color: white; border: none; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Add a Song</h1>
+
+    <form method="POST">
+        <input type="text" name="title" placeholder="Song title" required>
+        <input type="text" name="artist" placeholder="Artist" required>
+        <input type="text" name="album" placeholder="Album" required>
+        <input type="text" name="genre" placeholder="Genre" required>
+
+        <button type="submit">Save Song</button>
+    </form>
+
+    <br>
+    <a href="/">Back to list</a>
+</div>
+</body>
+</html>
